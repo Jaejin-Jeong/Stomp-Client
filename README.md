@@ -1,7 +1,7 @@
 # Stomp-Client
-> Stomp Server
 
-    [Stomp-Server](https://github.com/Jaejin-Jeong/Stomp-Server)
+> Stomp Server
+[Stomp-Server](https://github.com/Jaejin-Jeong/Stomp-Server)
 
 > Nginx Setting
 ```
