@@ -1,0 +1,68 @@
+<html>
+<head>
+    <title>Stomp WebSocket Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script src="./js/sockjs-0.3.4.js"></script>
+    <script src="./js/stomp.js"></script>
+
+    <script type="text/javascript">
+
+        var stompClient = null;
+
+        function setConnected(connected) {
+            document.getElementById('connect').disabled = connected;
+            document.getElementById('disconnect').disabled = !connected;
+        }
+
+        function connect() {
+
+            stompClient = Stomp.over(new SockJS('/ws/stomp'));
+            stompClient.connect({}, function (frame) {
+                setConnected(true);
+                console.log('Connected: ' + frame);
+                // 메시지 수신
+                stompClient.subscribe('/topic/user-name', function (data) {
+                    console.log('-------------data.body------------------');
+                    console.log(data.body)
+                    console.log('-------------data.body------------------');
+                    $("#messages").append("<tr><td>" + data.body + "</td></tr>");
+                });
+            });
+        }
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        }
+
+    </script>
+
+</head>
+
+<body onLoad="disconnect()">
+
+<div>
+    <div>
+        <button id="connect" onClick="connect();">Connect</button>
+        <button id="disconnect" disabled="disabled" onClick="disconnect();">Disconnect</button>
+    </div>
+    <div>
+        <table id="conversation" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Messages</th>
+            </tr>
+            </thead>
+            <tbody id="messages">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
