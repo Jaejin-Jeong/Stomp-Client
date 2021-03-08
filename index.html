@@ -13,6 +13,7 @@
 
         function setConnected(connected) {
             document.getElementById('connect').disabled = connected;
+            document.getElementById('send').disabled = !connected;
             document.getElementById('disconnect').disabled = !connected;
         }
 
@@ -41,7 +42,8 @@
         }
 
         function send() {
-            stompClient.send("/user", {}, "Message");
+            let mes = $("#sendText").val()
+            stompClient.send("/username", {}, mes);
         }
 
     </script>
@@ -54,6 +56,9 @@
     <div>
         <button id="connect" onClick="connect();">Connect</button>
         <button id="disconnect" disabled="disabled" onClick="disconnect();">Disconnect</button>
+        <br>
+        <input type="text" id="sendText">
+        <button id="send" onClick="send();">Sens</button>
     </div>
     <div>
         <table id="conversation" class="table table-striped">
