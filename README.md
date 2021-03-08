@@ -37,7 +37,6 @@ http {
             proxy_set_header Host $http_host;
         }
 
-
         location /ws {
             proxy_pass http://localhost:8080/ws;
             proxy_http_version      1.1;
@@ -56,4 +55,5 @@ http {
 
 
 }
+
 ```
